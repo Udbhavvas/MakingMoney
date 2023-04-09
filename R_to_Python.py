@@ -121,7 +121,8 @@ fuck7 = fuck7.sort_values(by="datadate")
 fuck8 = fuck7[fuck7["datadate"] == datetime.strptime("2023-03-24", "%Y-%m-%d")]
 
 # Create an empty matrix
-m = [[0 for _ in range(497)] for _ in range(497)]
+m = [[0 for _ in range(498)] for _ in range(498)]
+# m = np.zeros((497, 497))
 
 # Read newstocks.txt
 with open("newstocks.txt", "r") as f:
@@ -134,23 +135,25 @@ for i in x:
     for j in x:
         print(f"{i} {j}")
 
-        x1 = fuck8.columns.get_loc(i) - 1
-        y1 = fuck8.columns.get_loc(j) - 1
+        x1 = fuck8.columns.get_loc(i)-1
+        y1 = fuck8.columns.get_loc(j)-1
 
-        stock1 = fuck8.columns.get_loc(f"{i}r")
-        stock2i = fuck8.columns.get_loc(f"{j}ryi")
-        stock2s = fuck8.columns.get_loc(f"{j}rys")
+        # stock1 = fuck8.columns.get_loc(f"{i}r")
+        # stock2i = fuck8.columns.get_loc(f"{j}ryi")
+        # stock2s = fuck8.columns.get_loc(f"{j}rys")
+        # f"{stock1, stock2i, stock2s}"
+        # fuck8.iloc
 
-        fuck9 = fuck8[[stock1, stock2i, stock2s]]
+        fuck9 = fuck8[[f"{i}r", f"{j}ryi", f"{j}rys"]]
 
         if fuck9.iloc[0].isnull().any():
             continue
 
-        if fuck9.iloc[0][stock1] >= 0:
-            if fuck9.iloc[0][stock1] <= fuck9.iloc[0][stock2i] and fuck9.iloc[0][stock1] <= fuck9.iloc[0][stock2s]:
+        if fuck9.iloc[0][0] >= 0:
+            if fuck9.iloc[0][0] <= fuck9.iloc[0][1] and fuck9.iloc[0][0] <= fuck9.iloc[0][2]:
                 m[x1][y1] = 1
-        elif fuck9.iloc[0][stock1] < 0:
-            if fuck9.iloc[0][stock1] <= fuck9.iloc[0][stock2s] and fuck9.iloc[0][stock1] <= fuck9.iloc[0][stock2i]:
+        elif fuck9.iloc[0][0] < 0:
+            if fuck9.iloc[0][0] <= fuck9.iloc[0][2] and fuck9.iloc[0][0] <= fuck9.iloc[0][1]:
                 m[x1][y1] = 1
 
 
