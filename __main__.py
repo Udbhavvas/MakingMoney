@@ -16,7 +16,6 @@ def main():
     close['retyestmin'] = mindelt*close["retyest"]
     close['retyestpl'] = pldelt*close["retyest"]
     close.head()
-
     insert = {'tic': "ABCD",
               'datadate': "2010-01-05",
               'prccd': 90,
@@ -47,7 +46,6 @@ def main():
         else 0,
         axis=1
     )
-
     # insert = {'tic': "ABCD",
     #           'datadate': "2010-01-05",
     #           'prccd': 90,
