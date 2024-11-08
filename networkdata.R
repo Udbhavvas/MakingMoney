@@ -1,21 +1,21 @@
 library(tidyverse)
-fuck <- read.csv("C:\\Users\\nmasc\\Downloads\\w7daf8uqcgnpvs0d.csv")
-fuck6 <- read.csv("C:\\Users\\nmasc\\Downloads\\wdlcuzmdxfnpbrli.csv")
+fv <- read.csv("C:\\Users\\nmasc\\Downloads\\w7daf8uqcgnpvs0d.csv")
+fv6 <- read.csv("C:\\Users\\nmasc\\Downloads\\wdlcuzmdxfnpbrli.csv")
 x <- scan("stocks.txt", what="", sep="\n")
 x[1] = "MMM"
-# fuck1 <- fuck %>% pivot_wider(names_from = "tic", values_from = "datadate")
-fuck1 <- fuck %>% select(datadate, tic, prccd) %>% drop_na(datadate, tic, prccd) %>% 
+# fv1 <- fv %>% pivot_wider(names_from = "tic", values_from = "datadate")
+fv1 <- fv %>% select(datadate, tic, prccd) %>% drop_na(datadate, tic, prccd) %>% 
   filter(tic != '' & datadate != '', tic %in% x) %>%
   mutate(datadate = as.Date(datadate)) %>% 
   arrange(datadate)
-# fuck2 <- fuck %>% filter(prccd > 1000)
-fuck2 <- fuck1 %>% pivot_wider(names_from = "tic", values_from = "prccd")
-# fuck3 <- fuck %>% filter(tic == 'AAL')
-fuck4 <- fuck2 %>% select(datadate, AMZN)
+# fv2 <- fv %>% filter(prccd > 1000)
+fv2 <- fv1 %>% pivot_wider(names_from = "tic", values_from = "prccd")
+# fv3 <- fv %>% filter(tic == 'AAL')
+fv4 <- fv2 %>% select(datadate, AMZN)
 d = .2
 di = 1-d
 ds = 1+d
-fuck5 <- fuck4 %>% mutate(AMZNr = (AMZN - lag(AMZN, 1))/lag(AMZN, 1),
+fv5 <- fv4 %>% mutate(AMZNr = (AMZN - lag(AMZN, 1))/lag(AMZN, 1),
                             AMZNry = lag(AMZNr, 1),
                             AMZNryi = AMZNry*di,
                             AMZNrys = AMZNry*ds)
@@ -25,7 +25,7 @@ fuck5 <- fuck4 %>% mutate(AMZNr = (AMZN - lag(AMZN, 1))/lag(AMZN, 1),
 #   ry = name + "ry"
 #   ryi = name + "ryi"
 #   rys = name + "rys"
-#   fuck2 <- fuck2 %>% mutate(r = (name - lag(name, 1))/lag(name, 1),
+#   fv2 <- fv2 %>% mutate(r = (name - lag(name, 1))/lag(name, 1),
 #                             ry = lag(r, 1),
 #                             ryi = ry*di,
 #                             rys = ry*ds)
@@ -33,7 +33,7 @@ fuck5 <- fuck4 %>% mutate(AMZNr = (AMZN - lag(AMZN, 1))/lag(AMZN, 1),
 capture.output(writeLines(unlist(lapply(test, paste, collapse="\n"))), file = "newstocks.txt")
 lapply(test, write, "newstocks.txt", append=TRUE)
 
-fuck2 <- fuck2 %>% mutate(MMMr = (MMM - lag(MMM, 1))/lag(MMM, 1),
+fv2 <- fv2 %>% mutate(MMMr = (MMM - lag(MMM, 1))/lag(MMM, 1),
                           MMMry = lag(MMMr, 1),
                           MMMryi = MMMry*di,
                           MMMrys = MMMry*ds,
@@ -2021,5 +2021,5 @@ fuck2 <- fuck2 %>% mutate(MMMr = (MMM - lag(MMM, 1))/lag(MMM, 1),
                           OGNry = lag(OGNr, 1),
                           OGNryi = OGNry*di,
                           OGNrys = OGNry*ds)
-fuck2 %>% write.csv("finally.csv")
+fv2 %>% write.csv("finally.csv")
 
